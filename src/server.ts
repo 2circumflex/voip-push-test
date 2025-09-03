@@ -1,6 +1,7 @@
 import express, { Request, Response, Application } from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
+import swaggerUi from 'swagger-ui-express';
 import * as apn from '@parse/node-apn';
 import { v4 as uuidv4 } from 'uuid';
 import {
@@ -8,6 +9,7 @@ import {
   VoIPPayload,
 } from './types';
 import { config } from './config';
+import { swaggerSpec } from './swagger';
 
 const app: Application = express();
 const port: number = config.port;
@@ -17,11 +19,18 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
 
+// Swagger UI 설정
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
+  customCss: '.swagger-ui .topbar { display: none }',
+  customSiteTitle: 'VoIP Push Test API',
+}));
+
 // Request 타입을 확장하여 body에 타입 추가
 interface SendVoipPushReq extends Request {
   body: SendVoipPushReqBody;
 }
 
+// VoIP Push 알림 전송 API
 app.post('/send-voip-push', (req: SendVoipPushReq, res: Response): void => {
   try {
     const { calleeInfo, callerName, callerHandle }: SendVoipPushReqBody = req.body;
@@ -126,6 +135,7 @@ app.post('/send-voip-push', (req: SendVoipPushReq, res: Response): void => {
 // 서버 시작
 app.listen(port, (): void => {
   console.log(`🚀 Server running at http://localhost:${port}/`);
+  console.log(`📚 API Documentation available at http://localhost:${port}/api-docs`);
 });
 
 export default app;
