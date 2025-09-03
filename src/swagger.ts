@@ -34,7 +34,6 @@ const swaggerDefinition = {
         properties: {
           calleeInfo: { $ref: '#/components/schemas/CalleeInfo' },
           callerName: { type: 'string', example: '홍길동' },
-          callerHandle: { type: 'string', example: '+82-10-1234-5678' },
         },
       },
       SuccessResponse: {

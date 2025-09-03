@@ -10,7 +10,6 @@ export interface CalleeInfo {
 export interface SendVoipPushReqBody {
   calleeInfo: CalleeInfo;
   callerName: string;
-  callerHandle?: string; // 전화번호 또는 핸들 (선택사항)
 }
 
 export interface VoIPPayload {
@@ -18,7 +17,6 @@ export interface VoIPPayload {
   aps: {
     'content-available': number;
   };
-  handle: string;
   uuid: string;
 }
 

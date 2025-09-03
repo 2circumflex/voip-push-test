@@ -33,7 +33,7 @@ interface SendVoipPushReq extends Request {
 // VoIP Push 알림 전송 API
 app.post('/send-voip-push', (req: SendVoipPushReq, res: Response): void => {
   try {
-    const { calleeInfo, callerName, callerHandle }: SendVoipPushReqBody = req.body;
+    const { calleeInfo, callerName }: SendVoipPushReqBody = req.body;
 
     if (!calleeInfo?.deviceToken) {
       res.status(400).json({ error: 'Device token is required' });
@@ -71,7 +71,6 @@ app.post('/send-voip-push', (req: SendVoipPushReq, res: Response): void => {
       aps: {
         'content-available': 1,
       },
-      handle: callerHandle || callerName, // callerHandle이 있으면 사용, 없으면 callerName 사용
       uuid: uuidv4(),
     };
 

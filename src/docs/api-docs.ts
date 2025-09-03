@@ -20,7 +20,6 @@ export const voipPushApiDoc = {
                 deviceToken: "a1b2c3d4e5f6789abcdef123456789abcdef123456789abcdef123456789abcd"
               },
               callerName: "홍길동",
-              callerHandle: "+82-10-1234-5678"
             }
           }
         }
